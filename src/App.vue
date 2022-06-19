@@ -6,18 +6,25 @@
     label-width="100px"
     :model="user"
     style="max-width: 600px">
-    <el-form-item label="Name">
+    <el-form-item label="Name" prop="name">
       <el-input v-model="user.name" />
     </el-form-item>
-    <el-form-item label="Password">
-      <el-input v-model="user.psd" type="password"/>
+    <el-form-item label="Password" prop="psd">
+      <el-input v-model="user.psd" type="password" autocomplete="off"/>
+    </el-form-item>
+    <el-form-item>
+      <el-button type="primary" @click="submitForm"
+        >Submit</el-button
+      >
+      <el-button @click="cancelLogin">Reset</el-button>
     </el-form-item>
     </el-form>
     </el-card>
   </div>
-  <div v-if="!isUp">
-      <MenuButton id="menuBtn" @click="ShowInfo"></MenuButton>
+  <div>
+      <MenuButton id="menuBtn" @click="showInfo"></MenuButton>
       <el-drawer v-model="drawer"  :with-header="false" :direction="ltr" :before-close="handleClose">
+        <el-avatar src="3f7ca39bdfa02b8a9ca8741fb7db6092.jpg" size = "large"/>
       </el-drawer>
       <NavigationTemplete id="nav"/>  
       <div id="content">
@@ -44,14 +51,22 @@ export default {
       ltr:'ltr',
       isUp:true,
       user:{
-        name:"UserName",
-        psd:"Password",
+        name:"",
+        psd:"",
       }
     }
   },
   methods:{
-    ShowInfo(){
+    showInfo(){
       this.drawer = true;
+    },
+    cancelLogin(){
+      this.isUp = false;
+      this.user.name="";
+      this.user.psd="";
+    },
+    submitForm(){
+      
     }
   }
 }
@@ -99,5 +114,8 @@ body{
   display: flex;
   justify-content: center;
   align-items: center;
+  background: rgba(0, 0, 0, 0.5);
+  position:fixed;
+  z-index: 2;
 }
 </style>
